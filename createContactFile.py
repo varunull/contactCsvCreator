@@ -58,7 +58,7 @@ def selectOptionFromList(listname, list_vals):
     displayTableFromList(listname, list_vals)
     index = int(input('Enter {} index: '.format(listname)))
     if index > len(list_vals):
-        prRed("Wrong choice entered, please try again!")
+        prRed("[ERROR] : Wrong choice entered, please try again!")
         sys.exit()
 
     optionVal = list_vals[index - 1]
@@ -119,7 +119,7 @@ class RecordClass:
                     missingFields.append(field)
 
         if (len(missingFields)):
-            prRed("\nThere are missing fields in the sheet, they are : ")
+            prRed("\n[ERROR] : There are missing fields in the sheet, they are : ")
             displayTableFromList('Field Name', missingFields)
             sys.exit()
 
@@ -160,7 +160,7 @@ class FileClass(RecordClass):
 
     def fetchRecordsFromFile(self):
         if not self.bFileExists:
-            prRed("Cant fetch records from a file that doesn't exist! Returning...")
+            prRed("[ERROR] : Cant fetch records from a file that doesn't exist! Returning...")
             sys.exit()
 
         self.fileRecords = []
@@ -179,7 +179,8 @@ class SheetClass(RecordClass):
         try :
             sheetClnt.open(name1).worksheet(name2)
         except :
-            prRed("\nPlease check if you've inputted correct values!\nSpreadsheet Name : " + name1 + "\nSheet Name : " + name2)
+            prRed("\n[ERROR] : Please check if you've provided the correct values!\nSpreadsheet Name : " + name1 + "\nSheet Name : " + name2)
+            prRed("\n[ERROR] : Alternatively, please check if you've given the correct access to the service account for the specified sheet.")
             sys.exit()
 
         self.spreadsheetName = name1
@@ -204,7 +205,7 @@ class SheetClass(RecordClass):
 
         # Perform a sanity check
         if columnIndex > len(self.sheetHeaders):
-            prRed("You have selected an invalid column name : {}".format(columnIndex));
+            prRed("[ERROR] : You have selected an invalid column name : {}".format(columnIndex));
             sys.exit()
 
         columnValues = self.sheetObject.col_values(columnIndex)
@@ -228,20 +229,26 @@ def getWorksheetName():
 
 
 def getAuthClient():
-    # Scope of our spreadsheet
-    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
-    # Get the credentials
-    creds = ServiceAccountCredentials.from_json_keyfile_name('Customer_Database_secret.json', scope)
+    # Check if the service account credentials are stored properly or not.
+    homeDir = path.expanduser( '~' )
+    jsonFilePath = homeDir + '/.config/gspread/service_account.json'
+    if not path.isfile(jsonFilePath):
+        prRed("[ERROR] : Please ensure that the service account credentials file is there at {}. For more info : https://docs.gspread.org/en/v5.7.0/oauth2.html#for-bots-using-service-account".format(jsonFilePath))
+        sys.exit()
 
     # Authorise the client
-    return gspread.authorize(creds)
+    return gspread.service_account()
 
 
 def checkOrCreateDestDir(dirName):
     if not path.exists(dirName):
         prGreen("\n\n[+] Creating {} directory in the same folder!".format(OUTPUTDIR))
         mkdir(dirName)
+
+
+def getNewAuthClient():
+    return gspread.service_account()
 
 
 def fetchTheClientRecords(allAttr=None, reqAttr=None):
@@ -312,7 +319,7 @@ def createContactFileObject(Prefix, Suffix, bIsDest, fileExt=""):
 
 def getRecordsWithAttr(recordList, attrKey, attrValue):
     if len(recordList) <= 0:
-        prRed("Record List is empty!")
+        prRed("[ERROR] : Record List is empty!")
         sys.exit()
 
     final_record = []
@@ -353,7 +360,7 @@ def addRecordsToFile(fileName, fileHeaders, operationChoice, records):
             writer.writeheader()
             writer.writerows(records)
     else:
-        prRed("Unknown Choice... Exiting!")
+        prRed("[ERROR] : Unknown Choice... Exiting!")
         sys.exit()
 
     prBlue("[++] Contacts added to File : {}\n".format(fileName))
