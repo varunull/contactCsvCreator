@@ -1,5 +1,4 @@
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import pprint
 import tabulate
 import csv
@@ -43,6 +42,7 @@ def displayTable(dict_list):
     header = ['idx'] + list(dict_list[0].keys())
     rows = [[idx + 1] + list(x.values()) for idx, x in enumerate(dict_list)]
     print(tabulate.tabulate(rows, header, tablefmt='grid'))
+    print("\n")
 
 
 def displayTableFromList(listname, list_vals):
@@ -86,7 +86,7 @@ class Mappings:
     def updateMapping(self):
         displayDictionaryAsMappings(self.finalMapping)
 
-        choice = input("\nDo you want to add any more mappings? Type yes or no: ")
+        choice = input("Do you want to add any more mappings? Type yes or no: ")
         while choice == "yes":
             fieldIndex1, fieldValue1 = selectOptionFromList('Destination File Field', self.dstMappingList)
             fieldIndex2, fieldValue2 = selectOptionFromList('Source File Field', self.srcMappingList)
@@ -243,7 +243,7 @@ def getAuthClient():
 
 def checkOrCreateDestDir(dirName):
     if not path.exists(dirName):
-        prGreen("\n\n[+] Creating {} directory in the same folder!".format(OUTPUTDIR))
+        prGreen("\n[+] Creating {} directory in the same folder!".format(OUTPUTDIR))
         mkdir(dirName)
 
 
@@ -359,7 +359,7 @@ def addRecordsToFile(fileName, fileHeaders, operationChoice, records):
         prRed("[ERROR] : Unknown Choice... Exiting!")
         sys.exit()
 
-    prBlue("[++] Contacts added to File : {}\n".format(fileName))
+    prLightPurple("[++] Contacts added to File : {}\n".format(fileName))
 
 
 def createDestinationFileFromSourceRecords(objMapping, destFileObject, sourceRecords, bIsDstFileTmp):
@@ -402,7 +402,7 @@ def main():
 
     if clientContactsFileObject.bFileExists:
         # Fetch all the records
-        prLightGray("\n[!] There is already an existing file for this sheet, fetching its Records...")
+        prLightPurple("\n[!] There is already an existing file for this sheet, fetching its Records...")
         clientContactsFileObject.fetchRecordsFromFile()
 
         # Check for required Fields
@@ -427,12 +427,12 @@ def main():
     checkOrCreateDestDir(OUTPUTDIR)
 
     # Adding to main file
-    prGreen("\n[+] Adding all the new contacts to the main file...")
+    prGreen("[+] Adding all the new contacts to the main file...")
     createDestinationFileFromSourceRecords(mappingSheetToCsv, clientContactsFileObject, recordList, False)
 
     # Adding to temporary File
     if len(clientSheetObject.trimmedRecords):
-        prGreen("\n[+] Adding all the new contacts to the temporary file...")
+        prGreen("[+] Adding all the new contacts to the temporary file...")
         createDestinationFileFromSourceRecords(mappingSheetToCsv, currentContactTmpObject, clientSheetObject.trimmedRecords, True)
 
 

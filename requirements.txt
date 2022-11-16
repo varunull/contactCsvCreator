@@ -1,0 +1,6 @@
+gspread
+pprint
+tabulate
+csv
+string
+os
