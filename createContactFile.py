@@ -247,10 +247,6 @@ def checkOrCreateDestDir(dirName):
         mkdir(dirName)
 
 
-def getNewAuthClient():
-    return gspread.service_account()
-
-
 def fetchTheClientRecords(allAttr=None, reqAttr=None):
 
     # Authorise the client
