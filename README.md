@@ -1,5 +1,8 @@
-# contactCsvCreator
-contactCsv creator is a tool that parses contact details from a Google sheet and creates a CSV file. This CSV file can then be directly used to import contacts using the Google Contacts import option in https://contacts.google.com/. **This script is most beneficial in times when responses of a Google Form contain identification details of users like their name, numbers, city, occupation, etc. The form owner can directly use this script on the response sheet to create a CSV file, thus enabling them to import all the entries as phone contacts**
+# contactCsvCreator 
+contactCsv creator is a tool that parses contact details from a Google sheet and creates a CSV file. This CSV file can then be directly used to import contacts using the Google Contacts import option in https://contacts.google.com/.
+
+## But, how does it benefit me?
+Imagine this : You're going to kick-start a new course and have circulated a Google Form for students who are interested. The Google Form responses are over a 1000 entries, with each containing the Name, Number, Email, DOB and some other details of the students. Now, you want to frequently communicate with these students over Whatsapp/Email or via any other means, and hence, need to save their contacts with the details that they provided. *What do you do? You use contactCsvCreator.*
 
 ## Requirements 
 1. Run `pip3 install -r requirements.txt`.
