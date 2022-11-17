@@ -7,11 +7,11 @@ Imagine a scenario : You're going to kick-start a new course and have circulated
 ## Requirements
 1. Run `pip3 install -r requirements.txt`.
 2. This script internally uses the [gspread](https://docs.gspread.org/en/v5.7.0/) python library to parse the data present in the Google Sheet. For accessing the sheet, the user/service account needs to authorize using OAuth Client API present in the library.
-3. To create a service account with the intended access rights, refer the configuration steps documented here - https://docs.gspread.org/en/v5.7.0/oauth2.html#for-bots-using-service-account. If all of them are followed correctly, the file containing the service account credentials should be preset as : **~/.config/gspread/service_account.json** in your local system.
+3. To create a service account with the intended access rights, refer the configuration steps documented here - https://docs.gspread.org/en/v5.7.0/oauth2.html#for-bots-using-service-account. If all of them are followed correctly, the file containing the service account credentials should be available for download as a Json file. As part of the API requirement, this file needs to be stored as : **~/.config/gspread/service_account.json** in your local system.
 
 ## Usage
 1. Simply run the command : `python createContactFile.py`
-2. A CSV file will be created in the **./outputCsv/** directory. It's name is created according to the convention : `Contacts - *<Spreadsheet Name>* - *<Sheet Name>*.csv`
+2. A CSV file will be created in the **./outputCsv/** directory. It's name is created according to the convention : `Contacts - <Spreadsheet Name> - <Sheet Name>.csv`
 3. Import this CSV file to [Google Contacts](https://contacts.google.com/)
 4. It is now seen that contacts have been created with the respective details that are present in their corresponding entry in the Google Sheet. These can now be directly used for communication, maintenance of records, and alike.
 
