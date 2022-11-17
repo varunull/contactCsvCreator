@@ -11,7 +11,7 @@ Imagine a scenario : You're going to kick-start a new course and have circulated
 
 ## Usage
 1. Simply run the command : `python createContactFile.py`
-2. A CSV file will be created in the **./outputCsv/** directory. It's name is created according to the convention : 'Contacts - *<Spreadsheet Name>* - *<Sheet Name>*.csv'
+2. A CSV file will be created in the **./outputCsv/** directory. It's name is created according to the convention : `Contacts - *<Spreadsheet Name>* - *<Sheet Name>*.csv`
 3. Import this CSV file to [Google Contacts](https://contacts.google.com/)
 4. It is now seen that contacts have been created with the respective details that are present in their corresponding entry in the Google Sheet. These can now be directly used for communication, maintenance of records, and alike.
 
